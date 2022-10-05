@@ -39,7 +39,7 @@ export default class GameScene extends Scene {
     this.addChild(scoreText);
     scoreText.anchor.set(0.5, 0.5);
     scoreText.x = this.stageWidth / 2;
-    scoreText.y = 100;
+    scoreText.y = 65;
     scoreText.filters = [
       new PIXI.filters["GlowFilter"]({color: 0x00ff6e, distance: 15, innerStrength: 0.1, outerStrength: 2.5})
     ];
