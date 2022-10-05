@@ -1,5 +1,5 @@
 import SimpleCommand = puremvc.SimpleCommand;
-import GameProxy from "../model/GameProxy"
+import GameProxy from "../../proxy/GameProxy"
 
 export default class ModelPrepCommand extends SimpleCommand {
   constructor() {
@@ -7,6 +7,6 @@ export default class ModelPrepCommand extends SimpleCommand {
   }
 
   public execute() {
-    this.facade["registerProxy"](new GameProxy())
+    this.facade.registerProxy(new GameProxy())
   }
 }

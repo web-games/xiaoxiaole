@@ -12,9 +12,17 @@
       "allow-empty-functions"
     ],
     // 实施JSDoc注释的基本格式规则。
-    "jsdoc-format": [false, "check-multiline-start"],
+    "jsdoc-format": [
+      false,
+      "check-multiline-start"
+    ],
     // 要求变量声明使用const的，而不是let和var如果可能的话。
-    "prefer-const": [false, {"destructuring": "all"}],
+    "prefer-const": [
+      false,
+      {
+        "destructuring": "all"
+      }
+    ],
     // 不允许使用var关键字。
     "no-var-keyword": false,
     // 检查对象文字中键的排序。使用默认的字母顺序时，可以使用其他空行将对象属性组合在一起，同时按字母顺序保持每个组中的元素。
@@ -48,11 +56,17 @@
       ]
     },
     // 强制执行if/ for/ do/ while语句的大括号。
-    "curly": [true, "ignore-same-line"],
+    "curly": [
+      true,
+      "ignore-same-line"
+    ],
     // 不允许隐藏变量声明。
     "no-shadowed-variable": false,
     // 要求线条在某个最大长度以下。
-    "max-line-length": [true, 200],
+    "max-line-length": [
+      true,
+      200
+    ],
     // 类成员的一致排序可以使类更易于阅读，导航和编辑。
     "member-ordering": false,
     // 禁止不必要的字符串文字属性访问。
@@ -71,11 +85,14 @@
     "arrow-parens": false,
     // 禁止条件中的任何类型的赋值。
     "no-conditional-assignment": false,
-    "array-type": [true, "array"]
+    "array-type": [
+      true,
+      "array"
+    ]
   },
   "linterOptions": {
     "exclude": [
-      "src/org/util/log.ts"
+      ""
     ]
   }
 }

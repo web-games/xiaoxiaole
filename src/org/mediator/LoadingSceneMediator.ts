@@ -1,23 +1,23 @@
 import Mediator = puremvc.Mediator;
 import IMediator = puremvc.IMediator;
-import InitLoading from "./scenes/loading/InitLoading"
-import Scene, {SceneEvent} from "./scenes/Scene";
-import SceneCommand from "../controller/commands/SceneCommand";
+import LoadingScene from "./view/loading/LoadingScene"
+import {SceneEvent} from "./view/Scene";
+import SceneCommand from "../command/SceneCommand";
 
 export default class LoadingMediator extends Mediator implements IMediator {
-  public static NAME: string = "loading_mediator"
+  public static NAME: string = "loading_scene_mediator"
 
   constructor(viewComponent: any) {
     super(LoadingMediator.NAME, viewComponent)
-    this.initLoading.on(SceneEvent.INIT_COMPLETE, this.initComplete, this);
+    this.loadingScene.on(SceneEvent.INIT_COMPLETE, this.initComplete, this);
   }
 
   private initComplete() {
     var assetLoader = new PIXI["Loader"]();
-    assetLoader.add(["./resources/assets/assets.json"]);
+    assetLoader.add(["./resources/images/assets.json"]);
     assetLoader.once("complete", () => {
       setTimeout(() => {
-        this.sendNotification(SceneCommand.TO_START, {from: this.initLoading});
+        this.sendNotification(SceneCommand.TO_START, {from: this.loadingScene});
       }, 500)
     });
     assetLoader.on("progress", (e) => {
@@ -26,7 +26,7 @@ export default class LoadingMediator extends Mediator implements IMediator {
     assetLoader.load();
   }
 
-  public get initLoading() {
-    return this.viewComponent as InitLoading
+  public get loadingScene() {
+    return this.viewComponent as LoadingScene
   }
 }

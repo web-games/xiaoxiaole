@@ -48,29 +48,6 @@ module.exports = {
         loader: 'tslint-loader',
         enforce: 'pre',
         exclude: /(node_modules)/,
-      },
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: 'style-loader',
-            options: {
-              singleton: true
-            }
-          },
-          {
-            loader: 'css-loader'
-          }
-        ]
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 100,
-          name: path.posix.join('./', 'img/[name].[hash:7].[ext]'),
-          publicPath: './'
-        }
       }
     ]
   }

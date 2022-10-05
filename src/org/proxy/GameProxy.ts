@@ -1,6 +1,6 @@
 import Proxy = puremvc.Proxy;
 import IProxy = puremvc.IProxy;
-import GameData from "./common/GameData"
+import GameData from "./model/GameData"
 
 export default class GameProxy extends Proxy implements IProxy {
   public static NAME: string = "game_proxy"
@@ -11,7 +11,5 @@ export default class GameProxy extends Proxy implements IProxy {
   constructor() {
     super(GameProxy.NAME)
     this.gameData = new GameData()
-
-    window["gameProxy"] = this
   }
 }

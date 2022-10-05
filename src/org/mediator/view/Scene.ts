@@ -1,4 +1,5 @@
 import Container = PIXI.Container
+import Game from "../../../Game";
 
 export const enum SceneEvent {
   INIT_COMPLETE = "init_complete",
@@ -6,8 +7,15 @@ export const enum SceneEvent {
 }
 
 export default class Scene extends Container {
-  constructor() {
+  public game: Game = null;
+  public stageWidth: number = 0;
+  public stageHeight: number = 0;
+
+  constructor(game: Game) {
     super()
+    this.game = game;
+    this.stageWidth = game.stageWidth
+    this.stageHeight = game.stageHeight
   }
 
   public init() {

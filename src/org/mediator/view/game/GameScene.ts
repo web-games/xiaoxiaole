@@ -9,6 +9,6 @@ export default class GameScene extends Scene {
   }
 
   public init() {
-    
+
   }
 }

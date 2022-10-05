@@ -218,6 +218,7 @@ declare module puremvc
         public multitonKey: string;
         public initializeNotifier(key:string): void;
         public sendNotification(name: string, body?: any, type?: string): void;
+        public facade: Facade;
         public facade(): IFacade;
         static MULTITON_MSG: string;
     }
