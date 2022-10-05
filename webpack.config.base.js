@@ -7,8 +7,8 @@ module.exports = {
     main: './src/main.ts'
   },
   output: {
-    path: __dirname + '/output',
-    publicPath: '/',
+    path: __dirname + '/dist',
+    publicPath: './',
     filename: 'app.[hash:7].js'
   },
   resolve: {

@@ -1,6 +1,9 @@
+import Container = PIXI.Container
+import Graphics = PIXI.Graphics
+import Sprite = PIXI.Sprite
 import Text = PIXI.Text
 
-import Scene from "../Scene";
+import Scene, {SceneEvent} from "../Scene";
 import Map from "../../../proxy/model/Map";
 import Fruit from "./Fruit";
 
@@ -12,23 +15,48 @@ export default class GameScene extends Scene {
 
   private fruits = {}
 
+  private scoreText: Text = null;
+  private animalContainer: Container = null;
+
   constructor(game) {
     super(game)
   }
 
   public init(map?: any) {
     super.init(map);
-    console.log(map);
+
+    this.filters = [new PIXI.filters["GodrayFilter"]({alpha: 0.5})];
 
     let {rows, cols, data} = map;
 
-    let bg = new PIXI.Graphics()
-    this.addChild(bg)
+    let bgImage = Sprite.from("./resources/images/main_background.jpg")
+    this.addChild(bgImage)
+
+    var scoreText = new Text(``, {
+      fill: 0xffffff,
+      fontSize: 64,
+    });
+    this.addChild(scoreText);
+    scoreText.anchor.set(0.5, 0.5);
+    scoreText.x = this.stageWidth / 2;
+    scoreText.y = 100;
+    scoreText.filters = [
+      new PIXI.filters["GlowFilter"]({color: 0x00ff6e, distance: 15, innerStrength: 0.1, outerStrength: 2.5})
+    ];
+    this.scoreText = scoreText;
+    this.updateScore(0);
+
+    var animalContainer = new Container();
+    this.addChild(animalContainer);
+    animalContainer.x = (this.stageWidth - cols * Map.GridWidth) / 2
+    animalContainer.y = (this.stageHeight - rows * Map.GridHeight) / 2
+    this.animalContainer = animalContainer;
+
+    let bg = new Graphics()
+    animalContainer.addChild(bg)
 
     for (var i = 0; i < rows; i++) {
       for (var j = 0; j < cols; j++) {
-        this.addFruit(i, j, data[i][j])
-
         let startX = j * Map.GridWidth
         let startY = i * Map.GridHeight
 
@@ -44,30 +72,73 @@ export default class GameScene extends Scene {
         bg.lineTo(startX, startY + Map.GridHeight)
         bg.closePath()
         bg.endFill()
+
+        this.addFruit({
+          row: i,
+          col: j,
+          value: data[i][j],
+          animate: {
+            from: {x: (cols * Map.GridWidth) / 2, y: 0},
+            to: {x: (j * Map.GridWidth + Map.GridWidth / 2), y: (i * Map.GridHeight + Map.GridHeight / 2)}
+          }
+        })
       }
     }
+
+    setTimeout(() => {
+      this.emit(SceneEvent.INIT_COMPLETE)
+    }, 1000)
   }
 
-  private addFruit(row, col, value, init_x = 0, init_y = 0) {
-    var fruit = new Fruit(row, col, value)
-    this.addChild(fruit)
-    fruit.x = init_x || (col * Map.GridWidth + Map.GridWidth / 2)
-    fruit.y = init_y || (row * Map.GridHeight + Map.GridHeight / 2)
-    fruit.on("pointerdown", (event) => {
-      this.emit(GameScene.CLICK_FRUIT, event.currentTarget)
+  public addFruit(data) {
+    if (!Array.isArray(data)) {
+      data = [data]
+    }
+
+    data.forEach(({row, col, value, animate}) => {
+      var fruit = new Fruit(row, col, value)
+      this.animalContainer.addChild(fruit)
+      if (animate) {
+        let {from, to} = animate
+        window.TweenMax.fromTo([fruit], 0.3, from, to);
+      } else {
+        fruit.x = (col * Map.GridWidth + Map.GridWidth / 2)
+        fruit.y = (row * Map.GridHeight + Map.GridHeight / 2)
+      }
+
+      fruit.on("pointerdown", (event) => {
+        fruit.filters = [new PIXI.filters["OutlineFilter"](2, 0x99ff99)];
+        this.emit(GameScene.CLICK_FRUIT, event.currentTarget)
+      })
+      this.fruits[`${row}_${col}`] = fruit;
     })
-    this.fruits[`${row}_${col}`] = fruit;
   }
 
-  public swapFruit([node1, node2]) {
+  public swapFruit([node1, node2], type) {
     let {row: row1, col: col1} = node1;
     let {row: row2, col: col2} = node2;
-
     let fruit1 = this.fruits[`${row1}_${col1}`]
-    fruit1.setRowCol(row2, col2)
-
     let fruit2 = this.fruits[`${row2}_${col2}`]
-    fruit2.setRowCol(row1, col1)
+
+    if (type === "success") {
+      fruit1.setRowCol(row2, col2)
+      fruit2.setRowCol(row1, col1)
+      this.fruits[`${row1}_${col1}`] = fruit2
+      this.fruits[`${row2}_${col2}`] = fruit1
+      setTimeout(() => {
+        fruit1.filters = []
+        fruit2.filters = []
+      }, 300)
+    } else if (type === "fail") {
+      fruit1.rotation = -0.05;
+      fruit2.rotation = -0.05;
+      window.TweenMax.to(fruit1, 0.1, {rotation: 0.1, ease: window.Linear.easeNone, repeat: 5, yoyo: true});
+      window.TweenMax.to(fruit2, 0.1, {rotation: 0.1, ease: window.Linear.easeNone, repeat: 5, yoyo: true});
+      setTimeout(() => {
+        fruit1.filters = []
+        fruit2.filters = []
+      }, 300)
+    }
   }
 
   public deleteFruit(data) {
@@ -93,7 +164,21 @@ export default class GameScene extends Scene {
       data[key].forEach(({row, col, drop}) => {
         let fruit = this.fruits[`${row}_${col}`]
         fruit.setRowCol(row + drop, col)
+
+        this.fruits[`${row}_${col}`] = null;
+        this.fruits[`${row + drop}_${col}`] = fruit;
       })
     }
+  }
+
+  public updateScore(score) {
+    if (score < 1000) {
+      score = `000${score}`
+    } else if (score < 100) {
+      score = `00${score}`
+    } else if (score < 10) {
+      score = `0${score}`
+    }
+    this.scoreText.text = `Score: ` + score;
   }
 }

@@ -7,6 +7,8 @@ export default class GameCommand extends SimpleCommand implements ICommand {
 
   public static ADD_FRUIT_STACK = "add_fruit_stack"
 
+  public static CHECK = "check"
+
   constructor() {
     super()
   }
@@ -23,6 +25,9 @@ export default class GameCommand extends SimpleCommand implements ICommand {
       case GameCommand.ADD_FRUIT_STACK:
         gameProxy.addSwapFruit(body)
         break
+      case GameCommand.CHECK:
+        gameProxy.map.check();
+        break;
     }
   }
 }

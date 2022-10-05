@@ -14,7 +14,17 @@ export default class LoadingMediator extends Mediator implements IMediator {
 
   private initComplete() {
     var assetLoader = new PIXI["Loader"]();
-    assetLoader.add(["./resources/images/assets.json"]);
+    assetLoader.add([
+      "./resources/images/main_background.jpg",
+      "./resources/images/animal1.png",
+      "./resources/images/animal2.png",
+      "./resources/images/animal3.png",
+      "./resources/images/animal4.png",
+      "./resources/images/animal5.png",
+      "./resources/images/animal6.png",
+      "./resources/images/animal7.png",
+      "./resources/images/animal8.png",
+    ]);
     assetLoader.once("complete", () => {
       setTimeout(() => {
         // this.sendNotification(SceneCommand.TO_START, {from: this.loadingScene});

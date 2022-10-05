@@ -1,29 +1,35 @@
 import GameProxy from "../GameProxy";
 
 export default class Map {
-  public static GridWidth = 55
-  public static GridHeight = 55
+  public static GridWidth = 80
+  public static GridHeight = 80
 
   public rows = 10
   public cols = 5
 
   public data = [
-    [1, 2, 3, 4, 5],
-    [2, 3, 6, 8, 6],
-    [1, 3, 6, 8, 7],
-    [3, 3, 3, 3, 3],
-    [1, 3, 6, 6, 9],
-    [1, 2, 3, 4, 5],
-    [1, 3, 6, 8, 6],
-    [1, 3, 6, 8, 2],
-    [3, 3, 3, 3, 8],
-    [1, 3, 6, 7, 9],
+    [2, 4, 2, 4, 2],
+    [4, 5, 4, 5, 4],
+    [4, 5, 5, 5, 4],
+    [3, 4, 5, 4, 3],
+    [1, 1, 4, 1, 1],
+    [6, 3, 6, 3, 6],
+    [3, 7, 3, 7, 3],
+    [3, 7, 7, 7, 3],
+    [2, 3, 7, 3, 2],
+    [8, 8, 3, 8, 8],
   ]
 
   private proxy: GameProxy = null;
 
   constructor(proxy) {
     this.proxy = proxy;
+
+    // for (var i = 0; i < this.rows; i++) {
+    //   for (var j = 0; j < this.cols; j++) {
+    //     this.data[i][j] = this.getAnimalIndex()
+    //   }
+    // }
   }
 
   swap(row1, col1, row2, col2) {
@@ -32,7 +38,7 @@ export default class Map {
     this.data[row1][col1] = this.data[row2][col2];
     this.data[row2][col2] = temp;
 
-    console.log(row1, col1, row2, col2, this.data)
+    // console.log(row1, col1, row2, col2, this.data)
 
     setTimeout(() => {
       this.check();
@@ -84,7 +90,37 @@ export default class Map {
         console.log(this.data)
 
         this.proxy.sendNotification(GameProxy.DROP_FRUIT, drop)
+
+        setTimeout(() => {
+          this.check()
+        }, 300)
       }, 1000)
+    } else {
+      let arr = []
+      for (var j = 0; j < this.cols; j++) {
+        for (var i = 0; i < this.rows; i++) {
+          if (this.data[i][j] === null) {
+            // console.log(`填充：${i}行${j}列`)
+            this.data[i][j] = this.getAnimalIndex()
+
+            arr.push({
+              row: i,
+              col: j,
+              value: this.data[i][j],
+              animate: {
+                from: {x: (this.cols * Map.GridWidth) / 2, y: 0},
+                to: {x: (j * Map.GridWidth + Map.GridWidth / 2), y: (i * Map.GridHeight + Map.GridHeight / 2)}
+              }
+            })
+          }
+        }
+        // console.log("\n")
+      }
+
+      if (arr.length) {
+        this.proxy.sendNotification(GameProxy.ADD_FRUIT, arr)
+        this.check()
+      }
     }
   }
 
@@ -105,6 +141,9 @@ export default class Map {
         } else {
           if (same >= 3) {
             // console.log(`(${i},${j})`)
+            this.proxy.score += same;
+            this.proxy.sendNotification(GameProxy.CHANGE_SCORE, this.proxy.score)
+
             var num = same
             var grid = ``
             while (num) {
@@ -144,6 +183,8 @@ export default class Map {
         } else {
           if (same >= 3) {
             // console.log(`(${i},${j})`)
+            this.proxy.score += same;
+            this.proxy.sendNotification(GameProxy.CHANGE_SCORE, this.proxy.score)
             var num = same
             var grid = ``
             while (num) {
@@ -164,5 +205,9 @@ export default class Map {
       }
     }
     return arr
+  }
+
+  getAnimalIndex() {
+    return (parseInt(String(Math.random() * 8)) + 1)
   }
 }

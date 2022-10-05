@@ -12,7 +12,7 @@ export default class Fruit extends PIXI.Container {
     this.row = row
     this.col = col
     this.value = value
-    var sprite = PIXI.Sprite.from(`./resources/images/star${value}.png`)
+    var sprite = PIXI.Sprite.from(`./resources/images/animal${value}.png`)
     this.addChild(sprite)
     sprite.anchor.set(0.5)
 
@@ -27,7 +27,7 @@ export default class Fruit extends PIXI.Container {
     this.update();
   }
 
-  setRowCol(row, col) {
+  setRowCol(row, col, move = true) {
     this.row = row;
     this.col = col;
     this.update();
@@ -35,10 +35,15 @@ export default class Fruit extends PIXI.Container {
     let x = col * Map.GridWidth + Map.GridWidth / 2
     let y = row * Map.GridHeight + Map.GridHeight / 2
 
-    window.TweenMax.to(this, 0.3, {x, y, ease: "none"})
+    if (move) {
+      window.TweenMax.to(this, 0.3, {x, y, ease: "none"})
+    } else {
+      this.x = x;
+      this.y = y;
+    }
   }
 
   update() {
-    this.text.text = `(${this.row},${this.col}) ${this.value}`
+    // this.text.text = `(${this.row},${this.col}) ${this.value}`
   }
 }

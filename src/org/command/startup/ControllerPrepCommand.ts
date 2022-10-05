@@ -13,6 +13,7 @@ export default class ControllerPrepCommand extends SimpleCommand implements ICom
     this.facade.registerCommand(SceneCommand.TO_START, SceneCommand)
     this.facade.registerCommand(SceneCommand.TO_GAME, SceneCommand)
 
+    this.facade.registerCommand(GameCommand.CHECK, GameCommand)
     this.facade.registerCommand(GameCommand.ADD_FRUIT_STACK, GameCommand)
   }
 }
