@@ -1,6 +1,7 @@
 import SimpleCommand = puremvc.SimpleCommand;
 import ICommand = puremvc.ICommand
 import SceneCommand from "../SceneCommand"
+import GameCommand from "../GameCommand";
 
 export default class ControllerPrepCommand extends SimpleCommand implements ICommand {
   constructor() {
@@ -11,5 +12,7 @@ export default class ControllerPrepCommand extends SimpleCommand implements ICom
     this.facade.registerCommand(SceneCommand.TO_LOADING, SceneCommand)
     this.facade.registerCommand(SceneCommand.TO_START, SceneCommand)
     this.facade.registerCommand(SceneCommand.TO_GAME, SceneCommand)
+
+    this.facade.registerCommand(GameCommand.ADD_FRUIT_STACK, GameCommand)
   }
 }

@@ -28,17 +28,14 @@ export default class ApplicationFacade extends Facade implements IFacade {
   }
 
   public initializeModel(): void {
-    console.log("initializeModel")
     super.initializeModel()
   }
 
   public initializeView(): void {
-    console.log("initializeView")
     super.initializeView();
   }
 
   public initializeController(): void {
-    console.log("initializeController")
     super.initializeController()
 
     this.registerCommand(ApplicationFacade.STARTUP, StartupCommand)

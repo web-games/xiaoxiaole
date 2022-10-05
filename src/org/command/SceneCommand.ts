@@ -13,6 +13,7 @@ import StartScene from "../mediator/view/start/StartScene";
 import StartSceneMediator from "../mediator/StartSceneMediator";
 import GameScene from "../mediator/view/game/GameScene";
 import GameSceneMediator from "../mediator/GameSceneMediator";
+import GameProxy from "../proxy/GameProxy";
 
 export default class SceneCommand extends SimpleCommand implements ICommand {
 
@@ -56,7 +57,7 @@ export default class SceneCommand extends SimpleCommand implements ICommand {
       case SceneCommand.TO_GAME:
         let gameScene: GameScene = (this.facade.retrieveMediator(GameSceneMediator.NAME) as GameSceneMediator).gameScene;
         game.stage.addChild(gameScene)
-        gameScene.init(1);
+        gameScene.init((this.facade.retrieveProxy(GameProxy.NAME) as GameProxy).map);
         break
     }
   }

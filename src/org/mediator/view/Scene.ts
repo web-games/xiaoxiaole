@@ -18,7 +18,7 @@ export default class Scene extends Container {
     this.stageHeight = game.stageHeight
   }
 
-  public init(data?: any) {
+  protected init(data?: any) {
 
   }
 

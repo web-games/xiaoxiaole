@@ -17,7 +17,8 @@ export default class LoadingMediator extends Mediator implements IMediator {
     assetLoader.add(["./resources/images/assets.json"]);
     assetLoader.once("complete", () => {
       setTimeout(() => {
-        this.sendNotification(SceneCommand.TO_START, {from: this.loadingScene});
+        // this.sendNotification(SceneCommand.TO_START, {from: this.loadingScene});
+        this.sendNotification(SceneCommand.TO_GAME, {from: this.loadingScene});
       }, 500)
     });
     assetLoader.on("progress", (e) => {

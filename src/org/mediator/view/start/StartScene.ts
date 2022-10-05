@@ -62,6 +62,10 @@ export default class StartScene extends Scene {
     _btn2.mousedown = _btn2.touchstart = () => {
       this.sceneOut()
     }
+
+    // setTimeout(() => {
+    //   this.sceneOut()
+    // }, 500)
   }
 
   public sceneOut() {
