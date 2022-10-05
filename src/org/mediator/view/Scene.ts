@@ -18,11 +18,11 @@ export default class Scene extends Container {
     this.stageHeight = game.stageHeight
   }
 
-  public init() {
+  public init(data?: any) {
 
   }
 
-  public destory() {
+  public destroy() {
 
   }
 

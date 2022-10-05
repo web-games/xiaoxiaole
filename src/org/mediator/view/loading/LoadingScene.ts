@@ -8,7 +8,7 @@ export default class LoadingScene extends Scene {
     super(game)
   }
 
-  public init(data?: any) {
+  public init() {
     let _txt1 = new Text("加载中...", {fill: "#FFFFFF"});
     this.addChild(_txt1);
     _txt1.anchor.set(0.5, 0.5);

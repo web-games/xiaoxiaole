@@ -10,5 +10,6 @@ export default class ControllerPrepCommand extends SimpleCommand implements ICom
   public execute() {
     this.facade.registerCommand(SceneCommand.TO_LOADING, SceneCommand)
     this.facade.registerCommand(SceneCommand.TO_START, SceneCommand)
+    this.facade.registerCommand(SceneCommand.TO_GAME, SceneCommand)
   }
 }

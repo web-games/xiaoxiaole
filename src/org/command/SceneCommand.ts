@@ -11,12 +11,16 @@ import LoadingSceneMediator from "../mediator/LoadingSceneMediator";
 
 import StartScene from "../mediator/view/start/StartScene";
 import StartSceneMediator from "../mediator/StartSceneMediator";
+import GameScene from "../mediator/view/game/GameScene";
+import GameSceneMediator from "../mediator/GameSceneMediator";
 
 export default class SceneCommand extends SimpleCommand implements ICommand {
 
   public static TO_LOADING = "to_loading"
 
   public static TO_START = "to_start"
+
+  public static TO_GAME = "to_game"
 
   constructor() {
     super()
@@ -32,7 +36,7 @@ export default class SceneCommand extends SimpleCommand implements ICommand {
 
     if (from) {
       from = from as Scene;
-      from.destory();
+      from.destroy();
       if (from.parent) {
         from.parent.removeChild(from)
       }
@@ -48,6 +52,11 @@ export default class SceneCommand extends SimpleCommand implements ICommand {
         let startScene: StartScene = (this.facade.retrieveMediator(StartSceneMediator.NAME) as StartSceneMediator).startScene;
         game.stage.addChild(startScene)
         startScene.init();
+        break
+      case SceneCommand.TO_GAME:
+        let gameScene: GameScene = (this.facade.retrieveMediator(GameSceneMediator.NAME) as GameSceneMediator).gameScene;
+        game.stage.addChild(gameScene)
+        gameScene.init(1);
         break
     }
   }

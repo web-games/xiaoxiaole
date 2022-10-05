@@ -4,6 +4,8 @@ export default class StartScene extends Scene {
 
   public static NAME = "start_scene";
 
+  public static CLICK_START: string = "click_start"
+
   constructor(game) {
     super(game)
   }
@@ -66,7 +68,7 @@ export default class StartScene extends Scene {
     window.TweenMax.to(this, 0.4, {
       alpha: 0,
       onComplete: () => {
-
+        this.emit(StartScene.CLICK_START)
       }
     });
   }
