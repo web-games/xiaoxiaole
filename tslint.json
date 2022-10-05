@@ -1,0 +1,81 @@
+{
+  "extends": "tslint:recommended",
+  "rules": {
+    "semicolon": [
+      false,
+      "always"
+    ],
+    // 如果allow-empty-catch指定了，则允许catch块为空。如果allow-empty-functions指定，则允许函数定义为空。
+    "no-empty": [
+      false,
+      "allow-empty-catch",
+      "allow-empty-functions"
+    ],
+    // 实施JSDoc注释的基本格式规则。
+    "jsdoc-format": [false, "check-multiline-start"],
+    // 要求变量声明使用const的，而不是let和var如果可能的话。
+    "prefer-const": [false, {"destructuring": "all"}],
+    // 不允许使用var关键字。
+    "no-var-keyword": false,
+    // 检查对象文字中键的排序。使用默认的字母顺序时，可以使用其他空行将对象属性组合在一起，同时按字母顺序保持每个组中的元素。
+    "object-literal-sort-keys": false,
+    // 需要或不允许在数组和对象文字中使用尾随逗号，解构赋值，函数类型，命名导入和导出以及函数参数。
+    "trailing-comma": [
+      false,
+      {
+        "multiline": {
+          "objects": "always",
+          "arrays": "always",
+          "functions": "never",
+          "typeLiterals": "ignore"
+        },
+        "esSpecCompliant": true
+      }
+    ],
+    // 禁止使用指定的console方法。
+    "no-console": false,
+    // 要求将import语句按字母顺序排列并进行分组。
+    "ordered-imports": false,
+    // 如果索引仅用于访问正在迭代的数组，则建议在标准'for'循环上使用'for-of'循环。
+    "prefer-for-of": false,
+    // 确保文件以换行符结尾。
+    "eofline": false,
+    "variable-name": {
+      "options": [
+        "check-format",
+        "allow-leading-underscore",
+        "allow-pascal-case"
+      ]
+    },
+    // 强制执行if/ for/ do/ while语句的大括号。
+    "curly": [true, "ignore-same-line"],
+    // 不允许隐藏变量声明。
+    "no-shadowed-variable": false,
+    // 要求线条在某个最大长度以下。
+    "max-line-length": [true, 200],
+    // 类成员的一致排序可以使类更易于阅读，导航和编辑。
+    "member-ordering": false,
+    // 禁止不必要的字符串文字属性访问。
+    "no-string-literal": false,
+    // 不允许按位运算符。
+    "no-bitwise": false,
+    // 调用时需要指定radix参数parseInt。
+    "radix": false,
+    // 不允许在同一声明语句中使用多个变量定义。
+    "one-variable-per-declaration": false,
+    // 实施一致的对象文字属性引用样式。
+    "object-literal-key-quotes": false,
+    // 强制/禁止使用ES6对象文字速记。
+    "object-literal-shorthand": false,
+    // 围绕箭头函数定义的参数需要括号。
+    "arrow-parens": false,
+    // 禁止条件中的任何类型的赋值。
+    "no-conditional-assignment": false,
+    "array-type": [true, "array"]
+  },
+  "linterOptions": {
+    "exclude": [
+      "src/org/util/log.ts"
+    ]
+  }
+}
