@@ -9,7 +9,7 @@ export default class Game extends PIXI.Application {
     Game.NAME = "game" + Game.NUM++
 
     this.view.style.width = "100%";
-    document.body.appendChild(this.view)
+    document.body.prepend(this.view)
   }
 
   public get stageWidth() {

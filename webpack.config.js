@@ -1,15 +1,14 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: {
-    main: './src/main.ts'
+    index: './src/main.ts',
   },
   output: {
-    path: __dirname + '/dist',
-    publicPath: './',
-    filename: 'app.[hash:7].js'
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true,
   },
   resolve: {
     alias: {
@@ -17,11 +16,19 @@ module.exports = {
     },
     extensions: ['.ts', '.js', '.json']
   },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+    ],
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './index.html',
       filename: 'index.html',
-      chunks: ['main'],
       inject: 'body',
       minify: {
         removeComments: false,
@@ -29,20 +36,5 @@ module.exports = {
         removeAttributeQuotes: false
       }
     }),
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, './resources'),
-        to: 'resources',
-        ignore: ['.*']
-      }
-    ])
   ],
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader'
-      }
-    ]
-  }
 }

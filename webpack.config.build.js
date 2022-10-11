@@ -1,15 +1,25 @@
 const path = require('path')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const merge = require('webpack-merge')
-const baseWebpackConfig = require('./webpack.config.base')
+const CopyWebpackPlugin = require("copy-webpack-plugin")
+const {merge} = require('webpack-merge')
+const baseWebpackConfig = require('./webpack.config')
 
-module.exports = merge(baseWebpackConfig,{
+let webpackConfig = merge(baseWebpackConfig, {
   mode: 'production',
-  devtool:'#source-map',
   plugins: [
-    new CleanWebpackPlugin(path.resolve(__dirname, './dist'),{
-      root: path.resolve(__dirname, './'),
-      verbose: true
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "./resources"),
+          to: "resources"
+        },
+      ],
     })
-  ]
-})
+  ],
+  output: {
+    publicPath: './'
+  }
+});
+
+// console.log(webpackConfig)
+
+module.exports = webpackConfig
