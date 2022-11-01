@@ -1,4 +1,4 @@
-import Map from "../../../proxy/model/Map";
+import Map from "../../../../proxy/model/Map";
 
 export default class Fruit extends PIXI.Container {
 

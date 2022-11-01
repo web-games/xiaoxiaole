@@ -1,13 +1,13 @@
 import Mediator = puremvc.Mediator;
 import IMediator = puremvc.IMediator;
 import INotification = puremvc.INotification;
-import GameScene from "./view/game/GameScene";
-import GameCommand from "../command/GameCommand";
-import GameProxy from "../proxy/GameProxy";
-import {SceneEvent} from "./view/Scene";
+import GameScene from './view/scene/game/GameScene';
+import GameCommand from '../command/GameCommand';
+import GameProxy from '../proxy/GameProxy';
+import {SceneEvent} from './view/scene/Scene';
 
 export default class GameSceneMediator extends Mediator implements IMediator {
-  public static NAME: string = "game_scene_mediator"
+  public static NAME: string = 'game_scene_mediator'
 
   constructor(viewComponent: any) {
     super(GameSceneMediator.NAME, viewComponent)
@@ -27,12 +27,15 @@ export default class GameSceneMediator extends Mediator implements IMediator {
       GameProxy.DELETE_FRUIT,
       GameProxy.DROP_FRUIT,
       GameProxy.SWAP_FRUIT,
+
       GameProxy.CHANGE_SCORE,
+
+      GameProxy.CHANGE_TIME,
     ]
   }
 
   public handleNotification(notification: INotification): void {
-    console.log("GameSceneMediator notification:", notification)
+    console.log('GameSceneMediator notification:', notification)
     let name = notification.getName()
     let body = notification.getBody()
     let type = notification.getType()
@@ -52,6 +55,9 @@ export default class GameSceneMediator extends Mediator implements IMediator {
         break;
       case GameProxy.CHANGE_SCORE:
         this.gameScene.updateScore(body)
+        break;
+      case GameProxy.CHANGE_TIME:
+        this.gameScene.updateTime(body)
         break;
     }
   }

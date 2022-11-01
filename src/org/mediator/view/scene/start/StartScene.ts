@@ -1,4 +1,5 @@
 import Scene from "../Scene";
+import Button from '../../common/Button'
 
 export default class StartScene extends Scene {
 
@@ -49,9 +50,7 @@ export default class StartScene extends Scene {
     _pic5.scale.x = _pic5.scale.y = 0;
     window.TweenMax.to(_pic5.scale, 1, {x: 1, y: 1, ease: window.Elastic.easeOut, delay: 0.8});
 
-    _btn2 = PIXI.Sprite.from("btn2.jpg");
-    _btn2.anchor.x = 0.5;
-    _btn2.anchor.y = 0.5;
+    _btn2 = new Button("start");
     _btn2.position.x = this.stageWidth / 2;
     _btn2.position.y = _pic5.position.y + 240;
     _stage2Container.addChild(_btn2);
@@ -62,10 +61,6 @@ export default class StartScene extends Scene {
     _btn2.mousedown = _btn2.touchstart = () => {
       this.sceneOut()
     }
-
-    // setTimeout(() => {
-    //   this.sceneOut()
-    // }, 500)
   }
 
   public sceneOut() {

@@ -3,18 +3,19 @@ import Graphics = PIXI.Graphics
 import Sprite = PIXI.Sprite
 import Text = PIXI.Text
 
-import Scene, {SceneEvent} from "../Scene";
-import Map from "../../../proxy/model/Map";
-import Fruit from "./Fruit";
+import Scene, {SceneEvent} from '../Scene';
+import Map from '../../../../proxy/model/Map';
+import Fruit from './Fruit';
 
 export default class GameScene extends Scene {
 
-  public static NAME = "game_scene";
+  public static NAME = 'game_scene';
 
-  public static CLICK_FRUIT = "click_fruit";
+  public static CLICK_FRUIT = 'click_fruit';
 
   private fruits = {}
 
+  private timeText: Text = null;
   private scoreText: Text = null;
   private animalContainer: Container = null;
 
@@ -25,23 +26,37 @@ export default class GameScene extends Scene {
   public init(map?: any) {
     super.init(map);
 
-    this.filters = [new PIXI.filters["GodrayFilter"]({alpha: 0.5})];
+    this.filters = [new PIXI.filters['GodrayFilter']({alpha: 0.5})];
 
     let {rows, cols, data} = map;
 
-    let bgImage = Sprite.from("./resources/images/main_background.jpg")
+    let bgImage = Sprite.from('./resources/images/main_background.jpg')
     this.addChild(bgImage)
+
+    var timeText = new Text(``, {
+      fill: 0xffffff,
+      fontSize: 48,
+    });
+    this.addChild(timeText);
+    // timeText.anchor.set(0, 0);
+    timeText.x = 0;
+    timeText.y = 0;
+    timeText.filters = [
+      new PIXI.filters['GlowFilter']({color: 0x00ff6e, distance: 15, innerStrength: 0.1, outerStrength: 2.5})
+    ];
+    this.timeText = timeText;
+    this.updateTime(60);
 
     var scoreText = new Text(``, {
       fill: 0xffffff,
-      fontSize: 64,
+      fontSize: 48,
     });
     this.addChild(scoreText);
-    scoreText.anchor.set(0.5, 0.5);
+    // scoreText.anchor.set(0.5, 0.5);
     scoreText.x = this.stageWidth / 2;
-    scoreText.y = 65;
+    // scoreText.y = 65;
     scoreText.filters = [
-      new PIXI.filters["GlowFilter"]({color: 0x00ff6e, distance: 15, innerStrength: 0.1, outerStrength: 2.5})
+      new PIXI.filters['GlowFilter']({color: 0x00ff6e, distance: 15, innerStrength: 0.1, outerStrength: 2.5})
     ];
     this.scoreText = scoreText;
     this.updateScore(0);
@@ -106,8 +121,8 @@ export default class GameScene extends Scene {
         fruit.y = (row * Map.GridHeight + Map.GridHeight / 2)
       }
 
-      fruit.on("pointerdown", (event) => {
-        fruit.filters = [new PIXI.filters["OutlineFilter"](2, 0x99ff99)];
+      fruit.on('pointerdown', (event) => {
+        fruit.filters = [new PIXI.filters['OutlineFilter'](2, 0x99ff99)];
         this.emit(GameScene.CLICK_FRUIT, event.currentTarget)
       })
       this.fruits[`${row}_${col}`] = fruit;
@@ -120,7 +135,7 @@ export default class GameScene extends Scene {
     let fruit1 = this.fruits[`${row1}_${col1}`]
     let fruit2 = this.fruits[`${row2}_${col2}`]
 
-    if (type === "success") {
+    if (type === 'success') {
       fruit1.setRowCol(row2, col2)
       fruit2.setRowCol(row1, col1)
       this.fruits[`${row1}_${col1}`] = fruit2
@@ -129,7 +144,7 @@ export default class GameScene extends Scene {
         fruit1.filters = []
         fruit2.filters = []
       }, 300)
-    } else if (type === "fail") {
+    } else if (type === 'fail') {
       fruit1.rotation = -0.05;
       fruit2.rotation = -0.05;
       window.TweenMax.to(fruit1, 0.1, {rotation: 0.1, ease: window.Linear.easeNone, repeat: 5, yoyo: true});
@@ -153,8 +168,8 @@ export default class GameScene extends Scene {
 
     arr.forEach(([row, col]) => {
       let fruit = this.fruits[`${row}_${col}`]
-      window.TweenMax.to(fruit.scale, 1, {x: 0, y: 0, ease: "power1.inOut"})
-      window.TweenMax.to(fruit, 1, {alpha: 0, ease: "none"})
+      window.TweenMax.to(fruit.scale, 1, {x: 0, y: 0, ease: 'power1.inOut'})
+      window.TweenMax.to(fruit, 1, {alpha: 0, ease: 'none'})
       this.fruits[`${row}_${col}`] = null;
     })
   }
@@ -172,13 +187,20 @@ export default class GameScene extends Scene {
   }
 
   public updateScore(score) {
-    if (score < 1000) {
-      score = `000${score}`
-    } else if (score < 100) {
-      score = `00${score}`
-    } else if (score < 10) {
-      score = `0${score}`
-    }
+    // if (score < 1000) {
+    //   score = `000${score}`
+    // } else if (score < 100) {
+    //   score = `00${score}`
+    // } else if (score < 10) {
+    //   score = `0${score}`
+    // }
     this.scoreText.text = `Score: ` + score;
+  }
+
+  public updateTime(time) {
+    // if (time < 10) {
+    //   time = `0${time}`
+    // }
+    this.timeText.text = `Time: ` + time;
   }
 }

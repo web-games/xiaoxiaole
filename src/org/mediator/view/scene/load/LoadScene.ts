@@ -1,7 +1,7 @@
 import Scene, {SceneEvent} from "../Scene";
 import Text = PIXI.Text;
 
-export default class LoadingScene extends Scene {
+export default class LoadScene extends Scene {
   public static NAME = "loading_scene"
 
   constructor(game) {
