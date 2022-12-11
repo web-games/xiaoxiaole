@@ -36,7 +36,7 @@ export default class GameCommand extends SimpleCommand implements ICommand {
         gameProxy.map.check();
         break;
       case GameCommand.GAME_START:
-        gameProxy.time = 10;
+        gameProxy.time = 60;
 
         var num = setInterval(() => {
           gameProxy.time--;
