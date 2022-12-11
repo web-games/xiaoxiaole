@@ -5,7 +5,7 @@ export default class Button extends Container {
 
   constructor(txt = '') {
     super()
-    var bg = PIXI.Sprite.from('./resources/images/loginButton.png');
+    var bg = PIXI.Sprite.from('sp_button_background.png');
     bg.anchor.set(0.5, 0.5);
     this.addChild(bg);
 

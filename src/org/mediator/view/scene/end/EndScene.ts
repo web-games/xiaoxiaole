@@ -1,5 +1,6 @@
 import Scene from '../Scene';
 import Button from '../../common/Button'
+import Sprite = PIXI.Sprite
 
 export default class EndScene extends Scene {
 
@@ -12,7 +13,9 @@ export default class EndScene extends Scene {
   }
 
   public init() {
-    var btn = new Button('again');
+    this.addChild(Sprite.from('sp_end_background.jpg'))
+
+    var btn = new Button('再来一次');
     btn.x = this.stageWidth / 2;
     btn.y = this.stageHeight / 2;
     btn.interactive = true;
@@ -20,9 +23,5 @@ export default class EndScene extends Scene {
       this.emit(EndScene.CLICK_AGAIN)
     });
     this.addChild(btn);
-  }
-
-  public sceneOut() {
-
   }
 }

@@ -30,17 +30,16 @@ export default class GameScene extends Scene {
 
     let {rows, cols, data} = map;
 
-    let bgImage = Sprite.from('./resources/images/main_background.jpg')
-    this.addChild(bgImage)
+    this.addChild(Sprite.from('sp_main_background.jpg'))
 
     var timeText = new Text(``, {
       fill: 0xffffff,
       fontSize: 48,
     });
     this.addChild(timeText);
-    // timeText.anchor.set(0, 0);
-    timeText.x = 0;
-    timeText.y = 0;
+    timeText.anchor.set(0.5, 0);
+    timeText.x = this.stageWidth / 4 * 1;
+    timeText.y = 10;
     timeText.filters = [
       new PIXI.filters['GlowFilter']({color: 0x00ff6e, distance: 15, innerStrength: 0.1, outerStrength: 2.5})
     ];
@@ -52,9 +51,9 @@ export default class GameScene extends Scene {
       fontSize: 48,
     });
     this.addChild(scoreText);
-    // scoreText.anchor.set(0.5, 0.5);
-    scoreText.x = this.stageWidth / 2;
-    // scoreText.y = 65;
+    scoreText.anchor.set(0.5, 0);
+    scoreText.x = this.stageWidth / 4 * 3;
+    scoreText.y = 10;
     scoreText.filters = [
       new PIXI.filters['GlowFilter']({color: 0x00ff6e, distance: 15, innerStrength: 0.1, outerStrength: 2.5})
     ];

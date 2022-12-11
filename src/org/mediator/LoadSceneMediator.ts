@@ -17,8 +17,6 @@ export default class LoadSceneMediator extends Mediator implements IMediator {
     var assetLoader = new PIXI['Loader']();
     assetLoader.add([
       './resources/images/assets.json',
-      './resources/images/main_background.jpg',
-      './resources/images/loginButton.png',
       './resources/images/animal1.png',
       './resources/images/animal2.png',
       './resources/images/animal3.png',
@@ -30,15 +28,17 @@ export default class LoadSceneMediator extends Mediator implements IMediator {
     ]);
     assetLoader.once('complete', () => {
       setTimeout(() => {
-        // this.sendNotification(SceneCommand.TO_START, {from: this.loadingScene});
+        this.sendNotification(SceneCommand.TO_START, {from: this.loadingScene});
 
-        this.sendNotification(SceneCommand.TO_GAME, {from: this.loadingScene});
+        // this.sendNotification(SceneCommand.TO_GAME, {from: this.loadingScene});
 
         // this.sendNotification(SceneCommand.TO_END, {from: this.loadingScene})
       }, 500)
     });
     assetLoader.on('progress', (e) => {
       console.log('加载百分比' + e.progress + '%');
+
+      this.loadingScene.setProgress(e.progress);
     });
     assetLoader.load();
   }

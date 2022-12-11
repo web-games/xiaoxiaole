@@ -57,6 +57,7 @@ export default class SceneCommand extends SimpleCommand implements ICommand {
       case SceneCommand.TO_START:
         let startScene: StartScene = (this.facade.retrieveMediator(StartSceneMediator.NAME) as StartSceneMediator).startScene;
         game.stage.addChild(startScene)
+        startScene.sceneIn();
         startScene.init();
         break
       case SceneCommand.TO_GAME:
