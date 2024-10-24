@@ -1,0 +1,7 @@
+/*!
+ * pixi-particles - v2.1.5
+ * Compiled Tue, 14 Mar 2017 22:08:59 UTC
+ *
+ * pixi-particles is licensed under the MIT License.
+ * http://www.opensource.org/licenses/mit-license
+ */
