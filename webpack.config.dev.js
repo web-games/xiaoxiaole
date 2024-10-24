@@ -7,8 +7,8 @@ module.exports = merge(baseWebpackConfig, {
   devServer: {
     static: "./",
     compress: true,
-    port: 9001,
+    port: 9002,
     hot: false,
-    liveReload: true,
+    liveReload: false,
   }
 })

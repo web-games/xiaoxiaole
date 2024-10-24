@@ -4,7 +4,7 @@ import Sprite = PIXI.Sprite
 import Text = PIXI.Text
 
 import Scene, {SceneEvent} from '../Scene';
-import Map from '../../../../proxy/model/Map';
+import Map from '../../../proxy/model/Map';
 import Fruit from './Fruit';
 
 export default class GameScene extends Scene {

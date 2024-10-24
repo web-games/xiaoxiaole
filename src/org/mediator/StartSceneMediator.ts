@@ -1,7 +1,7 @@
 import Mediator = puremvc.Mediator;
 import IMediator = puremvc.IMediator;
 import INotification = puremvc.INotification;
-import StartScene from "./view/scene/start/StartScene"
+import StartScene from "./scenes/start/StartScene"
 import SceneCommand from "../command/SceneCommand";
 
 export default class StartSceneMediator extends Mediator implements IMediator {

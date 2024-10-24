@@ -1,10 +1,10 @@
 import Mediator = puremvc.Mediator;
 import IMediator = puremvc.IMediator;
 import INotification = puremvc.INotification;
-import GameScene from './view/scene/game/GameScene';
+import GameScene from './scenes/game/GameScene';
 import GameCommand from '../command/GameCommand';
 import GameProxy from '../proxy/GameProxy';
-import {SceneEvent} from './view/scene/Scene';
+import {SceneEvent} from './scenes/Scene';
 
 export default class GameSceneMediator extends Mediator implements IMediator {
   public static NAME: string = 'game_scene_mediator'

@@ -1,7 +1,7 @@
 import Facade = puremvc.Facade;
 import IFacade = puremvc.IFacade;
 
-import Game from "../Game";
+import Game from "./Application";
 import SceneCommand from "./command/SceneCommand";
 import StartupCommand from "./command/startup/StartupCommand";
 
