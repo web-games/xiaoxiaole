@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "init": "npm install --registry=https://registry.npm.taobao.org",
+    "init": "npm install --registry=https://registry.npmmirror.com",
     "dev": "webpack serve --open --config webpack.config.dev.js",
     "build": "webpack --config webpack.config.build.js"
   },
@@ -19,6 +19,5 @@
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.9.3",
     "webpack-merge": "^5.8.0"
-  },
-  "dependencies": {}
+  }
 }
