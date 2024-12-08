@@ -36,7 +36,7 @@ export default class Fruit extends PIXI.Container {
     let y = row * Map.GridHeight + Map.GridHeight / 2
 
     if (move) {
-      window.TweenMax.to(this, 0.3, {x, y, ease: "none"})
+      TweenMax.to(this, 0.3, {x, y, ease: "none"})
     } else {
       this.x = x;
       this.y = y;

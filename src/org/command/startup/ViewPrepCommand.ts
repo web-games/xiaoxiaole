@@ -4,7 +4,7 @@ import INotification = puremvc.INotification;
 import Game from '../../Application'
 import StartScene from '../../mediator/scenes/start/StartScene';
 import StartSceneMediator from '../../mediator/StartSceneMediator';
-import LoadingScene from '../../mediator/scenes/load/LoadScene';
+import LoadingScene from '../../mediator/scenes/loading/LoadingScene';
 import LoadSceneMediator from '../../mediator/LoadingSceneMediator';
 import GameScene from '../../mediator/scenes/game/GameScene';
 import GameSceneMediator from '../../mediator/GameSceneMediator';

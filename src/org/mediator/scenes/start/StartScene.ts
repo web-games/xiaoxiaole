@@ -1,6 +1,7 @@
+import Text = PIXI.Text;
+import Sprite = PIXI.Sprite;
 import Scene from '../Scene';
 import Button from '../../components/Button'
-import Sprite = PIXI.Sprite
 
 export default class StartScene extends Scene {
 
@@ -8,76 +9,88 @@ export default class StartScene extends Scene {
 
     public static CLICK_START: string = 'click_start'
 
+    private _ticker = null;
+
     constructor(game) {
         super(game)
     }
 
     public init() {
-        this.addChild(Sprite.from('./resources/images/sp_start_background.jpg'))
+        this.addBackground();
+        // this.addChild(Sprite.from('./resources/images/sp_start_background.jpg'))
 
-        var _stage2Container;
-        var _pic4, _pic5;
-        var _btn2;
-        var _txt1;
+        let title_text = new Text('开心消消乐', {fill: 0xffffff, fontSize: 64});
+        title_text.anchor.set(0.5, 0.5);
+        title_text.x = this.stageWidth / 2;
+        title_text.y = this.stageHeight / 2 - 160;
+        this.addChild(title_text);
 
-        _stage2Container = new PIXI.Container();
-        this.addChild(_stage2Container);
+        // TweenMax.to(title_text, 1, {alpha: 1, ease: Strong.easeOut, delay: 1});
+        // TweenMax.to(title_text.position, 1, {y: this.stageHeight - 760, ease: Elastic.easeOut, delay: 0.8});
+        title_text.name = 'txt1';
 
-        _txt1 = new PIXI.Text('开心消消乐', {fill: '#FFFFFF'});
-        _stage2Container.addChild(_txt1);
-        _txt1.x = this.stageWidth / 2;
-        _txt1.y = this.stageHeight;
-        _txt1.anchor.x = 0.5;
-        _txt1.anchor.y = 1;
-        _txt1.alpha = 0;
-        window.TweenMax.to(_txt1, 1, {alpha: 1, ease: window.Strong.easeOut, delay: 1});
-        window.TweenMax.to(_txt1.position, 1, {y: this.stageHeight - 760, ease: window.Elastic.easeOut, delay: 0.8});
-        _txt1.name = 'txt1';
-
-        _txt1.rotation = -0.05;
-        window.TweenMax.to(_txt1, 0.1, {
+        title_text.rotation = -0.05;
+        TweenMax.to(title_text, 0.1, {
             rotation: 0.1,
-            ease: window.Linear.easeNone,
+            ease: Linear.easeNone,
             repeat: -1,
             yoyo: true,
-            delay: 1.2
+            delay: 1
         });
 
-        _pic4 = PIXI.Sprite.from('pic4.jpg');
-        _pic4.position.x = 0;
-        _pic4.position.y = 100;
-        _stage2Container.addChild(_pic4);
-        _pic4.alpha = 0;
-        window.TweenMax.to(_pic4, 0.6, {alpha: 1});
+        var start_btn = new Button('开始游戏');
+        start_btn.x = this.stageWidth / 2;
+        start_btn.y = this.stageHeight / 2;
+        this.addChild(start_btn);
 
-        _pic5 = PIXI.Sprite.from('pic5.png');
-        _pic5.anchor.x = 0.5;
-        _pic5.anchor.y = 0.5;
-        _pic5.position.x = this.stageWidth / 2;
-        _pic5.position.y = this.stageHeight / 2;
-        _stage2Container.addChild(_pic5);
-        _pic5.scale.x = _pic5.scale.y = 0;
-        window.TweenMax.to(_pic5.scale, 1, {x: 1, y: 1, ease: window.Elastic.easeOut, delay: 0.8});
+        start_btn.interactive = true;
+        start_btn.on('pointerdown', () => this.sceneOut())
 
-        _btn2 = new Button('开始');
-        _btn2.position.x = this.stageWidth / 2;
-        _btn2.position.y = _pic5.position.y + 240;
-        _stage2Container.addChild(_btn2);
-        _btn2.scale.x = _btn2.scale.y = 0;
-        window.TweenMax.to(_btn2.scale, 1, {x: 1, y: 1, ease: window.Elastic.easeOut, delay: 0.9});
+        TweenMax.fromTo(title_text.scale, 1, {x: 0, y: 0}, {x: 1, y: 1, ease: Elastic.easeOut, delay: 0.3});
+        TweenMax.fromTo(start_btn.scale, 1, {x: 0, y: 0}, {x: 1, y: 1, ease: Elastic.easeOut, delay: 0.45});
+    }
 
-        _btn2.interactive = true;
-        _btn2.mousedown = _btn2.touchstart = () => {
-            this.sceneOut()
+    private async addBackground() {
+        const stageWidth = this.stageWidth
+        const stageHeight = this.stageHeight
+
+        let fragmentShader = await fetch('./resources/shader/smog.frag').then((res) => res.text())
+
+        const uniforms = {
+            u_resolution: new PIXI.Point(stageWidth, stageHeight),
+            alpha: 1.0,
+            shift: 1.6,
+            time: 0,
+            speed: new PIXI.Point(0.1, 0.05)
         }
+        // @ts-ignore
+        const filter = new PIXI.Filter('', fragmentShader, uniforms)
+
+        const sprite = PIXI.Sprite.from('./resources/images/pixi_v3_github-pad.png')
+        sprite.filters = [filter]
+        sprite.width = stageWidth
+        sprite.height = stageHeight
+        this.addChildAt(sprite, 0)
+
+        // @ts-ignore
+        const ticker = new PIXI.Ticker();
+        ticker.add(function (deltaTime) {
+            uniforms.time += 0.01
+        });
+        ticker.start();
+        this._ticker = ticker;
+    }
+
+    public destroy() {
+        this._ticker.stop();
     }
 
     public sceneIn() {
-        window.TweenMax.to(this, 1, {alpha: 1});
+        TweenMax.to(this, 1, {alpha: 1});
     }
 
     public sceneOut() {
-        window.TweenMax.to(this, 0.4, {
+        TweenMax.to(this, 0.3, {
             alpha: 0,
             onComplete: () => {
                 this.emit(StartScene.CLICK_START)

@@ -114,7 +114,7 @@ export default class GameScene extends Scene {
       this.animalContainer.addChild(fruit)
       if (animate) {
         let {from, to} = animate
-        window.TweenMax.fromTo([fruit], 0.3, from, to);
+        TweenMax.fromTo([fruit], 0.3, from, to);
       } else {
         fruit.x = (col * Map.GridWidth + Map.GridWidth / 2)
         fruit.y = (row * Map.GridHeight + Map.GridHeight / 2)
@@ -146,8 +146,8 @@ export default class GameScene extends Scene {
     } else if (type === 'fail') {
       fruit1.rotation = -0.05;
       fruit2.rotation = -0.05;
-      window.TweenMax.to(fruit1, 0.1, {rotation: 0.1, ease: window.Linear.easeNone, repeat: 5, yoyo: true});
-      window.TweenMax.to(fruit2, 0.1, {rotation: 0.1, ease: window.Linear.easeNone, repeat: 5, yoyo: true});
+      TweenMax.to(fruit1, 0.1, {rotation: 0.1, ease: Linear.easeNone, repeat: 5, yoyo: true});
+      TweenMax.to(fruit2, 0.1, {rotation: 0.1, ease: Linear.easeNone, repeat: 5, yoyo: true});
       setTimeout(() => {
         fruit1.filters = []
         fruit2.filters = []
@@ -167,8 +167,8 @@ export default class GameScene extends Scene {
 
     arr.forEach(([row, col]) => {
       let fruit = this.fruits[`${row}_${col}`]
-      window.TweenMax.to(fruit.scale, 1, {x: 0, y: 0, ease: 'power1.inOut'})
-      window.TweenMax.to(fruit, 1, {alpha: 0, ease: 'none'})
+      TweenMax.to(fruit.scale, 1, {x: 0, y: 0, ease: 'power1.inOut'})
+      TweenMax.to(fruit, 1, {alpha: 0, ease: 'none'})
       this.fruits[`${row}_${col}`] = null;
     })
   }

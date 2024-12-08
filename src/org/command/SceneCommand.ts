@@ -6,7 +6,7 @@ import Game from '../Application';
 import Scene from '../mediator/scenes/Scene';
 import ApplicationFacade from '../ApplicationFacade';
 
-import LoadingScene from '../mediator/scenes/load/LoadScene';
+import LoadingScene from '../mediator/scenes/loading/LoadingScene';
 import LoadingSceneMediator from '../mediator/LoadingSceneMediator';
 
 import StartScene from '../mediator/scenes/start/StartScene';
@@ -35,7 +35,7 @@ export default class SceneCommand extends SimpleCommand implements ICommand {
     public execute(notification: INotification) {
         console.log('SceneCommand notification:', notification)
 
-        let game: Game = (this.facade as ApplicationFacade).game;
+        let game: Game = (this.facade as ApplicationFacade).application;
         let name = notification.getName()
         let body = notification.getBody()
         let {from} = body
@@ -43,9 +43,7 @@ export default class SceneCommand extends SimpleCommand implements ICommand {
         if (from) {
             from = from as Scene;
             from.destroy();
-            if (from.parent) {
-                from.parent.removeChild(from)
-            }
+            from.removeAllChildren();
         }
 
         switch (name) {
