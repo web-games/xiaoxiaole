@@ -2,7 +2,9 @@
 
 [点击这里玩游戏](https://web-games.github.io/xiaoxiaole/dist/index.html)
 
-## 技术栈：TypeScript + PureMVC + PIXI + GreenSock + Webpack + TexturePacker
+## 技术栈
+
+TypeScript + PureMVC + PIXI + GreenSock + Webpack + TexturePacker
 
 [TypeScript](https://www.tslang.cn/)
 
@@ -22,4 +24,5 @@
 
 [Webpack](https://webpack.docschina.org/concepts/)
 
-[TexturePacker](https://www.codeandweb.com/texturepacker)
+[TexturePacker](https://www.codeandweb.com/texturepacker)  
+Texture Merger 是一款纹理集打包和动画转换工具。
